@@ -1,0 +1,39 @@
+name: Build and Deploy Frontend to Firebase Hosting
+
+# This workflow builds the frontend on every push to main
+# Firebase deployment is commented out by default - see instructions below to enable it
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+
+defaults:
+  run:
+    working-directory: ./frontend
+
+# Uncomment this section when you're ready to deploy to Firebase
+# env:
+#   FIREBASE_TOKEN: ${{secrets.FIREBASE_TOKEN}}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: 'npm'
+          cache-dependency-path: './frontend/package-lock.json'
+      - run: npm ci
+      - run: npm run build
+      # To enable Firebase deployment:
+      # 1. Install Firebase CLI in your project: npm install -D firebase-tools
+      # 2. Add "deploy": "firebase deploy" script to package.json
+      # 3. Configure Firebase in your project
+      # 4. Add FIREBASE_TOKEN secret to repository
+      # 5. Uncomment the line below
+      # - run: npm run deploy

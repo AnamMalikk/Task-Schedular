@@ -1,0 +1,29 @@
+name: Publish Frontend to NPM
+
+on:
+  release:
+    types: [created]
+
+defaults:
+  run:
+    working-directory: ./frontend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+          cache: 'npm'
+          cache-dependency-path: './frontend/package-lock.json'
+      - run: npm ci
+      - run: npm run build
+      # Note: Before publishing, ensure "private": true is removed from package.json
+      # and that all package metadata (name, description, repository, etc.) is correct
+      - name: Publish package to NPM
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
