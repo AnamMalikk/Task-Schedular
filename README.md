@@ -1,11 +1,7 @@
----
-
 ## 📅 Task Scheduler (Personal Project)
 
 **Task Scheduler** is a smart and modern task management web application designed to help users organize their daily activities, track progress, and manage schedules effortlessly.
 This is a **personal full-stack learning project**, built to enhance web development, UI/UX, and productivity-app development skills.
-
----
 
 ## ✨ Features
 
